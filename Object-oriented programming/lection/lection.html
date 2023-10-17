@@ -206,6 +206,7 @@
       // stand: undefined is testing robot: Roomba-2
 
       // Класс робот-пылесос.
+      // Класс робот-пылесос.
       class RobotVacuumCleaner {
         // Свойства класса.
         model = "Romba-1";
@@ -220,23 +221,23 @@
         // Конструктор класса, мы изучим его подробнее на следующем уроке.
         constructor() {}
         // Методы класса.
-        startCleaning() {
+        startCleaning = () => {
           this.counterOfStarts++;
           console.log(
             "I am cleaning... I have been started: ",
             this.counterOfStarts,
             "times."
           );
-        }
-        goCharge() {
+        };
+        goCharge = () => {
           console.log("I am going to charge...");
-        }
-        switchUVLamp() {
+        };
+        switchUVLamp = () => {
           this.isUVLampOn = !this.isUVLampOn;
           console.log(
             `UV lamp is ${this.isUVLampOn ? "working" : "not working"}.`
           );
-        }
+        };
       }
       // Создадим экземпляр класса.
       const Roomba = new RobotVacuumCleaner();
