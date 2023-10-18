@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lection 2</title>
+  </head>
+  <body>
+    <script>
+      // Объект базовый пылесос
+      const VacuumCleaner = {
+        model: "vacuum cleaner",
+        counterOfStarts: 0,
+        isFull: false,
+        isObstacle: false,
+
+        startCleaning: function () {
+          this.counterOfStarts++;
+          // Добавим дополнительный вывод, чтобы знать чей метод мы вызвали.
+          console.log("I am the method of VacuumCleaner");
+          console.log(`I a, cleaning... I have been starts:
+                  ${this.counterOfStarts} times`);
+        },
+
+        goCharge: function () {
+          // Добавим дополнительный вывод, чтобы знать чей метод мы вызвали.
+          console.log("I am the method of VacuumCleaner");
+          console.log("I am going to charge...");
+        },
+      };
+
+      // новая модель пылесоса
+      const DancingSeries = {
+        // новый свойства и переопредление старых
+        model: "dancing series",
+        power: 200,
+        batterySize: 2100,
+        boxSizing: 0.5,
+        workTime: 45,
+        isUVLampOn: false,
+        // добавим новый метод
+        switchUVLamp: function () {
+          console.log("I am the method of DancingSeries");
+          this.isUVLampOn = !this.isUVLampOn;
+          console.log(
+            `UV Lamp is ${this.isUVLampOn ? "working" : "not working"}`
+          );
+        },
+
+        // наследуем прототип родителя.
+        __proto__: VacuumCleaner,
+      };
+
+      const Samba = {
+        // Обновляем свойства под конкретную модель.
+        model: "Samba-1",
+        power: 250,
+        batterySize: 2500,
+        workTime: 50,
+        // Делаем ссылку на прототип от родителя.
+        __proto__: DancingSeries,
+      };
+
+      // обращение к свойствам объекта
+      console.log(Samba.model);
+      console.log(Samba.isFull);
+      // вызов методов
+      Samba.startCleaning();
+      Samba.switchUVLamp();
+      Samba.goCharge();
+
+      // новый пылесос
+      const Djaiv = {
+        model: "Djaiv-1",
+        power: 250,
+        batterySize: 2500,
+        workTime: 50,
+
+        // перегружаем метод
+        startCleaning: function () {
+          this.counterOfStarts++;
+          console.log("I am the method of Djaiv");
+          console.log(
+            "I am Djaiv, and I am cleaning... I have been started: ",
+            this.counterOfStarts,
+            "times."
+          );
+        },
+        __proto__: DancingSeries,
+      };
+
+      // смотрим разницу
+      Samba.startCleaning();
+      Djaiv.startCleaning();
+
+      // получение прототипа
+      const DjaivProto = Object.getPrototypeOf(Djaiv);
+      console.log(DjaivProto.model);
+
+      const DjaivProtoProto = Object.getPrototypeOf(DjaivProto);
+      console.log(DjaivProtoProto.model);
+
+      const DjaivProtoProtoProto = Object.getPrototypeOf(DjaivProtoProto);
+      console.log(DjaivProtoProtoProto);
+
+      // новая серия пылесосов
+      const MusicSeries = {
+        model: "music series",
+        power: 200,
+        batterySize: 2100,
+        boxSize: 0.5,
+        workTime: 45,
+
+        startWipe: function () {
+          console.log("I am the method of MusicSeries");
+          console.log("I am starting to wipe the floor...");
+        },
+
+        __proto__: VacuumCleaner,
+      };
+
+      const Blues = {
+        model: "Bluees-1",
+        power: 250,
+        batterySize: 2500,
+        workTime,
+      };
+
+      Object.setPrototypeOf(Blues, MusicSeries);
+
+      // если мы не будем проверять прототип и вызовем метод чужого прототипа мы получим ошибку
+
+      if (Object.getPrototypeOf(Djaiv).model === "dancing series") {
+        Djaiv.startCleaning();
+      }
+
+      if (Object.getPrototypeOf(Blues).model === "music series") {
+        Blues.startWipe();
+      }
+
+      // конструктор
+      function Samba(serialNumber) {
+        this.serialNumber = serialNumber;
+        this.model = "Samba-1";
+        this.power = 250;
+        this.batterySize = 2500;
+        this.workTime = 50;
+
+        this.__proto__ = DancingSeries;
+      }
+
+      const Samba1 = new Samba(101010);
+
+      console.log(Samba1.serialNumber);
+      console.log(Samba1.startCleaning());
+
+      // создадим 10 роботов Samba
+      const robots = [];
+
+      for (let index = 0; index < 10; index++) {
+        robots.push(new Samba(index * 343));
+      }
+
+      console.log(robots);
+
+      // реализация оператора new через функцию
+      function createObject(constructor) {
+        // создаем объект
+        const obj = {};
+        // установим новому объекту прототип
+        Object.setPrototypeOf(obj, constructor.prototype);
+        // вызовем функцию-конструткор, передав ей как this созданный объект и передадим остальные аргументы, если они были переданы в createObject
+        const argsArray = Array.prototype.slice.apply(arguments);
+        const result = constructor.apply(obj, argsArray.slice(1));
+        // вернем новый объект, если конструктор вернул примитивное значение или undefined, иначе вернем то, что вернул конструктор.
+        if (
+          !result ||
+          typeof result === "string" ||
+          typeof result === "number" ||
+          typeof result === "boolean"
+        ) {
+          return obj;
+        } else {
+          return result;
+        }
+      }
+
+      const Samba2 = createObject(Samba, 123123421);
+      console.log(Samba2.serialNumber);
+      console.log(Samba2.__proto__);
+      Samba2.startCleaning();
+
+      // создание объектов и наследование с использованием class и extends
+      class newVacuumCleaner {
+        model = "vacuum cleaner";
+        counterOfStarts = 0;
+        isFull = false;
+        isObstacle = false;
+
+        constructor() {}
+
+        startCleaning() {
+          this.counterOfStarts++;
+          console.log("I am cleaning...");
+        }
+
+        goCharge() {
+          console.log("I am going to charge...");
+        }
+      }
+
+      const baseRobot = new newVacuumCleaner();
+
+      class newDancingSeries extends VacuumCleaner {
+        model = "dancing series";
+        power = 200;
+        batterySize = 2100;
+        boxSize = 0.5;
+        workTime = 45;
+        isUVLampOn = false;
+
+        switchUVLamp() {
+          this.isUVLampOn = !this.isUVLampOn;
+          console.log(`UV lamp is 
+          ${this.isUVLampOn ? "working" : "not working"}.`);
+        }
+      }
+
+      const dancingRobot = new newDancingSeries();
+      console.log(dancingRobot.model);
+      dancingRobot.switchUVLamp();
+    </script>
+  </body>
+</html>
