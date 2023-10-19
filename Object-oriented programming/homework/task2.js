@@ -33,9 +33,9 @@ class Product {
 }
 
 class Order {
+  products = [];
   constructor(id) {
     this.id = id;
-    this.products = [];
   }
 
   addProduct(product) {
@@ -43,11 +43,11 @@ class Order {
   }
 
   getTotalPrice() {
-    let totalPrice = 0;
-    this.products.forEach((element) => {
-      totalPrice += element.price;
-    });
-    return totalPrice;
+    let initialValue = 0;
+    return this.products.reduce(
+      (accumulator, currentElement) => accumulator + currentElement.price,
+      initialValue
+    );
   }
 
   printOrder() {
