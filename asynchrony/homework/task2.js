@@ -28,7 +28,7 @@ async function saveUserData(user) {
   return await fetch("https://reqres.in/api/users", {
     method: "POST",
     headers: {
-      "Content-Type": "aplication/json;charset=utf-8",
+      "Content-Type": "application/json;charset=utf-8",
     },
     body: JSON.stringify(user),
   });
