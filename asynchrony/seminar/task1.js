@@ -18,3 +18,20 @@
 // Сообщение 1
 // Сообщение 3
 // Конец программы
+
+let count = 0;
+
+function delayedMessage(message, delay) {
+  count++;
+  setTimeout(function () {
+    console.log(message);
+    count--;
+    if (count == 0) {
+      console.log("Конец программы");
+    }
+  }, delay);
+}
+
+delayedMessage("Сообщение 1", 2000);
+delayedMessage("Сообщение 2", 1000);
+delayedMessage("Сообщение 3", 3000);

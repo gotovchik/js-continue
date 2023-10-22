@@ -17,3 +17,28 @@
 // выводится сообщение об ошибке. Функция main также объявлена как
 // асинхронная с использованием ключевого слова async. В конце
 // вызывается функция main для запуска процесса получения данных.
+
+// async function getData(url) {
+//   try {
+//     const response = await fetch(url);
+//     if (response.ok) {
+//       console.log(await response.json());
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
+async function main() {
+  async function getData(url) {
+    const response = await fetch(url);
+    if (response.ok) {
+      return await response.json();
+    } else {
+      throw new Error(`Error status ${response.status}`);
+    }
+  }
+
+  console.log(await getData("https://jsonplaceholder.typicode.com/users"));
+}
+
+main();

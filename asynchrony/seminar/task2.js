@@ -17,3 +17,36 @@
 // 4. Откройте запрос с помощью xhr.open("GET", url, true), где "GET" - тип
 // запроса, url - адрес сервера, true - асинхронный режим запроса.
 // 5. Отправьте запрос на сервер с помощью xhr.send().
+
+//API: https://jsonplaceholder.typicode.com/users
+
+// function loadData(url) {
+//   const xhr = new XMLHttpRequest();
+
+//   xhr.open("GET", url, true);
+//   xhr.onload = function () {
+//     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+//       console.log(this.responseText);
+//     }
+//   };
+//   xhr.send();
+// }
+
+function loadData(url) {
+  fetch(url)
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error("Ошибка");
+      }
+    })
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
+loadData("https://jsonplaceholder.typicode.com/users");
