@@ -39,10 +39,10 @@ const user = {
   job: "unknown",
 };
 
-saveUserData(user)
-  .then(() => {
+saveUserData(user).then((response) => {
+  if (response.ok) {
     console.log("User data saved successfully");
-  })
-  .catch((error) => {
-    console.log(error.message);
-  });
+  } else {
+    throw new Error(`Error: ${response.status} (${response.statusText})`);
+  }
+});
