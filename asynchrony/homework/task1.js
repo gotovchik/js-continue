@@ -8,3 +8,21 @@
 // getUserData использует fetch для получения данных о пользователе с удаленного сервера. Если запрос успешен (с кодом 200), функция извлекает данные из ответа с помощью response.json() и возвращает объект с данными о пользователе. Если запрос неуспешен, функция отклоняет промис с сообщением об ошибке.
 
 // Работа должна быть выполнена с API: https://reqres.in/
+
+async function main() {
+  async function getUserData(url, id) {
+    const response = await fetch(`${url}api/users/${id}`);
+    if (response.ok) {
+      return await response.json();
+    } else {
+      throw new Error(`Error status: ${response.statusText}`);
+    }
+  }
+
+  const url = "https://reqres.in/";
+  const id = 3;
+  const data = await getUserData(url, id);
+  console.log(data);
+}
+
+main();

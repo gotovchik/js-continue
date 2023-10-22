@@ -6,3 +6,19 @@
 
 // // Пример использования функции
 // changeStyleDelayed('myElement', 2000); // Через 2 секунды изменяет стиль элемента с id 'myElement'"
+
+function changeStyle(elem) {
+  elem.classList.toggle("light-theme");
+  elem.classList.toggle("dark-theme");
+}
+
+function changeStyleDelayed(id, delay) {
+  const elem = document.getElementById(id);
+  setTimeout(function () {
+    changeStyle(elem);
+  }, delay);
+}
+
+changeStyleDelayed("myElem", 1000);
+changeStyleDelayed("myElem", 2000);
+changeStyleDelayed("myElem", 3000);
