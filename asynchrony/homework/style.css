@@ -1,0 +1,9 @@
+.light-theme {
+  color: blueviolet;
+  background-color: azure;
+}
+
+.dark-theme {
+  color: darkorange;
+  background-color: slategray;
+}
